@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bowen - Omni Matrix</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+    <div id="boot-screen">
+        <div id="falling-zero">0</div>
+        <div id="explosion-line"></div>
+    </div>
+
+    <div id="ui-overlay">
+        <h2 id="brand-logo">bowen</h2>
+        <button id="return-btn" class="hud-btn">[ SYSTEM OVERVIEW ]</button>
+    </div>
+
+    <div id="sidebar-menu">
+        <div class="menu-item active" data-index="0">ABOUT</div>
+        <div class="menu-item" data-index="1">SKILLS</div>
+        <div class="menu-item" data-index="2">EXPERIENCE</div>
+        <div class="menu-item" data-index="3">PROJECTS</div>
+        <div class="menu-item" data-index="4">VISION</div>
+        <div class="menu-item" data-index="5">CONTACT</div>
+    </div>
+
+    <div id="page-terminal">
+        <h3 id="page-title">ABOUT</h3>
+        <p id="page-text">Creative Developer & Interactive 3D Architect.</p>
+    </div>
+
+    <div id="hologram-ui">
+        <h4 id="holo-title">PROJECT_NAME</h4>
+        <p id="holo-desc" style="font-size: 0.95rem; color: #ffffff; line-height: 1.5; margin-bottom: 10px;">Project Description Here.</p>
+        <p id="holo-stack">REACT // NODE // THREE.JS</p>
+        <a href="#" id="holo-link" target="_blank">ACCESS DATA</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
