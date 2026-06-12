@@ -2,7 +2,6 @@
 window.onload = () => {
     document.getElementById('falling-zero').classList.add('drop-anim');
     
-    // 💥 The exact moment of impact (600ms to match new faster CSS drop)
     setTimeout(() => {
         // 1. Trigger Violent Screen Shake
         document.body.classList.add('shake-screen');
@@ -10,36 +9,40 @@ window.onload = () => {
         // 2. Hide the zero instantly
         document.getElementById('falling-zero').style.opacity = '0';
         
-        // 3. Spawn Mushroom Cloud Dots using GSAP (Explosive Speed)
+        // 3. Spawn HUGE Binary Mushroom Cloud
         const particleContainer = document.getElementById('mushroom-particles');
-        for(let i = 0; i < 70; i++) {
+        for(let i = 0; i < 150; i++) { // Doubled the amount of particles
             let dot = document.createElement('div');
-            dot.className = 'cloud-dot';
+            dot.className = 'binary-particle';
+            dot.innerText = Math.random() > 0.5 ? '1' : '0'; // Injecting binary text
             particleContainer.appendChild(dot);
             
-            // Physics math to separate the "Cap" from the "Stem"
+            // Physics math for a MASSIVE explosion
             let isCap = Math.random() > 0.4;
             let angle = Math.random() * Math.PI * 2;
-            let distance = isCap ? (80 + Math.random() * 250) : (10 + Math.random() * 50);
-            let height = isCap ? (-100 - Math.random() * 150) : (-20 - Math.random() * 80);
             
-            let xPos = isCap ? Math.cos(angle) * distance : (Math.random() - 0.5) * 50;
+            // Radically expanded distance multipliers
+            let distance = isCap ? (150 + Math.random() * 450) : (20 + Math.random() * 80);
+            let height = isCap ? (-150 - Math.random() * 300) : (-50 - Math.random() * 150);
+            
+            let xPos = isCap ? Math.cos(angle) * distance : (Math.random() - 0.5) * 80;
             let yPos = height;
             
-            // GSAP Brutal Blast Animation
+            // GSAP Brutal Blast Animation with Rotation
             gsap.fromTo(dot, 
-                { x: 0, y: 0, opacity: 1, scale: 0.5 },
+                { x: 0, y: 0, opacity: 1, scale: 0.5, rotation: 0 },
                 { 
                     x: xPos, y: yPos, 
-                    opacity: 0, scale: 1 + Math.random() * 3.5, 
-                    duration: 0.4 + Math.random() * 0.5, // Extremely fast!
-                    ease: "expo.out", // Aggressive explosion physics
+                    opacity: 0, scale: 0.8 + Math.random() * 1.5, // Scale adjusted for text
+                    rotation: (Math.random() - 0.5) * 180, // Adds chaotic spin to the numbers
+                    duration: 0.5 + Math.random() * 0.8, 
+                    ease: "expo.out", 
                     onComplete: () => dot.remove() 
                 }
             );
         }
 
-        // 4. Trigger Horizontal Shockwave Line (Faster)
+        // 4. Trigger Horizontal Shockwave Line
         document.getElementById('explosion-line').style.animation = 'expandLine 0.6s ease-out forwards';
         
         // 5. Fade to the 3D City Quicker
