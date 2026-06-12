@@ -2,31 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bowen - Omni Matrix</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bowen | Creative Developer</title>
     <link rel="stylesheet" href="style.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 
     <div id="boot-screen">
         <div id="falling-zero">0</div>
+        <div id="shockwave"></div>
         <div id="explosion-line"></div>
     </div>
 
     <div id="ui-overlay">
-        <h2 id="brand-logo">bowen</h2>
-        <button id="return-btn" class="hud-btn">[ SYSTEM OVERVIEW ]</button>
+        <h1 id="brand-logo">BOWEN</h1>
+        <button id="return-btn" class="hud-btn">RETURN TO ORBIT</button>
     </div>
 
     <div id="sidebar-menu">
@@ -39,17 +29,28 @@
     </div>
 
     <div id="page-terminal">
-        <h3 id="page-title">ABOUT</h3>
-        <p id="page-text">Creative Developer & Interactive 3D Architect.</p>
+        <h2 id="page-title">SYSTEM INITIATED</h2>
+        <p id="page-text">Awaiting navigational input...</p>
     </div>
 
     <div id="hologram-ui">
-        <h4 id="holo-title">PROJECT_NAME</h4>
-        <p id="holo-desc" style="font-size: 0.95rem; color: #ffffff; line-height: 1.5; margin-bottom: 10px;">Project Description Here.</p>
-        <p id="holo-stack">REACT // NODE // THREE.JS</p>
-        <a href="#" id="holo-link" target="_blank">ACCESS DATA</a>
+        <p style="color: #ff0055; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px;">[ SYSTEM ACCESS GRANTED ]</p>
+        <h3 id="holo-title">PROJECT</h3>
+        <p id="holo-desc">Description loading...</p>
+        <p id="holo-stack">STACK</p>
+        <a id="holo-link" href="#" target="_blank">ACCESS DATA</a>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
