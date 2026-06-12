@@ -169,4 +169,19 @@ canvas { display: block; width: 100vw; height: 100vh; }
     #holo-title { font-size: 1.2rem; letter-spacing: 1px; }
     #holo-desc { font-size: 0.8rem; margin-bottom: 10px; }
     #holo-stack { font-size: 0.7rem; }
+
+    /* 5. Ergonomic Red Return Button (Bottom Center) */
+    #return-btn {
+        position: fixed;
+        bottom: 80px; /* Floats perfectly above your swipe menu */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80vw; /* Makes it a nice, wide tap target */
+        text-align: center;
+        z-index: 100;
+        background: rgba(255, 0, 85, 0.1); /* Adds a slight tinted background */
+        backdrop-filter: blur(4px); /* Blurs the city behind it for readability */
+        font-size: 0.9rem;
+        padding: 15px;
+    }
 }
