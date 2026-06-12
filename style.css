@@ -15,25 +15,27 @@ canvas { display: block; width: 100vw; height: 100vh; }
     overflow: hidden; 
 }
 
-/* ☄️ The Cyan Data-Meteor (5x Longer Tail) */
+/* ☄️ The Cyan Data-Meteor (Massive Infinite Tail) */
 #falling-zero {
     position: absolute; 
     top: 50%; left: 50%; 
     color: #ffffff; 
     font-size: 3rem; font-weight: bold;
+    /* Stretched the shadow up to 1000px off-screen */
     text-shadow: 
         4px -4px 10px #00ffff, 
         12px -12px 20px #00aaff, 
         30px -30px 40px #0055ff, 
-        60px -60px 60px #0022aa,
-        100px -100px 80px #001188,
-        150px -150px 100px #000055,
-        220px -220px 120px #000033;
+        80px -80px 60px #0022aa,
+        150px -150px 80px #001188,
+        300px -300px 100px #000055,
+        600px -600px 120px #000033,
+        1000px -1000px 150px #000011;
     opacity: 0; 
-    transform: translate(50vw, -50vh) scale(1); 
+    transform: translate(60vw, -60vh) scale(1); 
 }
 
-.drop-anim { animation: meteorStrike 0.8s cubic-bezier(0.4, 0, 1, 1) forwards; }
+.drop-anim { animation: meteorStrike 0.6s cubic-bezier(0.4, 0, 1, 1) forwards; } /* Sped up drop */
 
 /* 💥 Individual Mushroom Cloud Dots */
 .cloud-dot {
@@ -42,7 +44,7 @@ canvas { display: block; width: 100vw; height: 100vh; }
     width: 6px; height: 6px;
     background-color: #00e5ff;
     border-radius: 50%;
-    box-shadow: 0 0 10px #00e5ff, 0 0 20px #0055ff;
+    box-shadow: 0 0 15px #00e5ff, 0 0 30px #0055ff;
     opacity: 0;
     transform: translate(-50%, -50%);
 }
@@ -55,11 +57,11 @@ canvas { display: block; width: 100vw; height: 100vh; }
 
 /* 🫨 Violent Screen Shake */
 .shake-screen {
-    animation: cameraShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    animation: cameraShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 @keyframes meteorStrike {
-    0% { transform: translate(50vw, -50vh) scale(1); opacity: 1; }
+    0% { transform: translate(60vw, -60vh) scale(1); opacity: 1; }
     95% { transform: translate(0, 0) scale(1.5); opacity: 1; } 
     100% { transform: translate(0, 0) scale(0); opacity: 0; } 
 }
@@ -72,17 +74,17 @@ canvas { display: block; width: 100vw; height: 100vh; }
 
 @keyframes cameraShake {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    10% { transform: translate(-15px, 15px) rotate(-1deg); }
-    20% { transform: translate(15px, -10px) rotate(1deg); }
-    30% { transform: translate(-10px, 10px) rotate(-0.5deg); }
-    40% { transform: translate(10px, -5px) rotate(0.5deg); }
-    50% { transform: translate(-5px, 5px) rotate(-0.2deg); }
+    10% { transform: translate(-20px, 20px) rotate(-2deg); }
+    20% { transform: translate(20px, -15px) rotate(2deg); }
+    30% { transform: translate(-10px, 10px) rotate(-1deg); }
+    40% { transform: translate(10px, -5px) rotate(1deg); }
+    50% { transform: translate(-5px, 5px) rotate(-0.5deg); }
 }
 
 /* TOP LEFT HUD & BRANDING */
 #ui-overlay { 
     position: absolute; top: 30px; left: 40px; color: #00e5ff; z-index: 10; 
-    pointer-events: none; opacity: 0; transition: opacity 1s ease;
+    pointer-events: none; opacity: 0; transition: opacity 0.8s ease;
 }
 #brand-logo {
     font-size: 1.5rem; letter-spacing: 6px; margin: 0 0 20px 0;
@@ -94,7 +96,7 @@ canvas { display: block; width: 100vw; height: 100vh; }
 #sidebar-menu {
     position: absolute; top: 50%; left: 40px; transform: translateY(-50%);
     z-index: 10; display: flex; flex-direction: column; gap: 20px;
-    pointer-events: auto; opacity: 0; transition: opacity 1s ease 0.5s;
+    pointer-events: auto; opacity: 0; transition: opacity 0.8s ease 0.3s;
 }
 .menu-item {
     color: #5a759a; font-size: 0.85rem; letter-spacing: 4px;
@@ -165,7 +167,7 @@ canvas { display: block; width: 100vw; height: 100vh; }
     text-decoration: line-through; 
     font-size: 0.8rem; 
     letter-spacing: 1px; 
-    pointer-events: none; /* KILLS THE CLICK COMPLETELY */
+    pointer-events: none; 
     cursor: not-allowed;
 }
 
@@ -173,12 +175,10 @@ canvas { display: block; width: 100vw; height: 100vh; }
    📱 MOBILE ARMOR PROTOCOL (RESPONSIVE UI)
    ========================================== */
 @media (max-width: 768px) {
-    /* 1. Adjust Top Left HUD */
     #ui-overlay { top: 20px; left: 20px; }
     #brand-logo { font-size: 1.2rem; letter-spacing: 4px; margin-bottom: 15px; }
     .hud-btn { padding: 8px 16px; font-size: 0.75rem; }
 
-    /* 2. Transform Sidebar into a Bottom Swipe Menu */
     #sidebar-menu {
         top: auto; bottom: 20px; left: 50%; transform: translateX(-50%);
         flex-direction: row; width: 90vw; overflow-x: auto; gap: 20px;
@@ -187,32 +187,27 @@ canvas { display: block; width: 100vw; height: 100vh; }
     #sidebar-menu::-webkit-scrollbar { display: none; }
     
     .menu-item { 
-        color: #888888; /* Muted Grey */
-        font-size: 0.7rem; padding-left: 0; padding-bottom: 8px; white-space: nowrap; 
+        color: #888888; font-size: 0.7rem; padding-left: 0; padding-bottom: 8px; white-space: nowrap; 
     }
     .menu-item::before { 
         top: auto; bottom: 0; left: 50%; transform: translateX(-50%); 
         width: 0px; height: 2px; background-color: #888888; 
     }
     .menu-item.active {
-        color: #ffffff; /* Turns bright white when active */
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
     .menu-item.active::before { width: 100%; background-color: #ffffff; }
 
-    /* 3. Scale Down & Box-Size the Page Text */
     #page-terminal, #hologram-ui {
         width: 90vw; padding: 20px; box-sizing: border-box; 
     }
     #page-title { font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 10px; }
     #page-text { font-size: 0.85rem; line-height: 1.4; word-wrap: break-word; }
 
-    /* 4. Scale Down the Holographic Project Terminal */
     #holo-title { font-size: 1.2rem; letter-spacing: 1px; }
     #holo-desc { font-size: 0.8rem; margin-bottom: 10px; }
     #holo-stack { font-size: 0.7rem; }
 
-    /* 5. Ergonomic Red Return Button (Bottom Center) */
     #return-btn {
         position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
         width: 80vw; text-align: center; z-index: 100;
