@@ -2,8 +2,10 @@
 window.onload = () => {
     document.getElementById('falling-zero').classList.add('drop-anim');
     
+    // 💥 The exact moment of impact (800ms)
     setTimeout(() => {
-        document.getElementById('explosion-line').style.animation = 'expandLine 1.2s ease-out forwards';
+        document.getElementById('shockwave').style.animation = 'blastWave 0.8s ease-out forwards';
+        document.getElementById('explosion-line').style.animation = 'expandLine 1.0s ease-out forwards';
         
         setTimeout(() => {
             document.getElementById('boot-screen').style.opacity = '0';
@@ -14,7 +16,7 @@ window.onload = () => {
             document.getElementById('page-terminal').classList.add('active');
             
             controls.enabled = true; 
-        }, 800);
+        }, 600); // UI fades in right after the blast wave clears
     }, 800); 
 };
 
@@ -196,13 +198,11 @@ for(let i = 0; i < 150; i++) {
 }
 scene.add(rainGroup);
 
-
 // --- 4. 3D PAGE NAVIGATION LOGIC (TRUE SPHERICAL MATH) ---
 let isRotating = false; 
 let isFlying = false; 
 let currentPageIndex = 0;
 
-// 🚀 THE STARK MANIFESTO ADDED
 const pages = [
     { title: "ABOUT", text: "I am Bowen. I specialize in high-stakes architecture and scaling systems that actually move the needle. Let's see if your vision can handle the upgrade." },
     { title: "SKILLS", text: "Full-Stack Development // WebGL // E-Commerce // Mobile Apps" },
@@ -289,7 +289,7 @@ document.querySelectorAll('.menu-item').forEach((item) => {
     });
 });
 
-// --- 5. RAYCASTER FLIGHT LOGIC (DEEP DIVING INTO CHIPS) ---
+// --- 5. RAYCASTER FLIGHT LOGIC ---
 let activeHologramTarget = null;
 const hologramUI = document.getElementById('hologram-ui');
 
@@ -303,7 +303,6 @@ window.addEventListener('pointermove', (e) => {
     else { document.body.style.cursor = 'default'; }
 });
 
-// 🚀 FIX: The Unified Interaction Handler (Handles both Desktop Clicks and Mobile Taps)
 function handleNodeInteraction(clientX, clientY, targetElement) {
     if(isRotating || isFlying || !controls.enabled || (targetElement && targetElement.closest && targetElement.closest('#sidebar-menu')) || targetElement.tagName === 'BUTTON' || targetElement.tagName === 'A') return;
     
@@ -317,27 +316,22 @@ function handleNodeInteraction(clientX, clientY, targetElement) {
     }
 }
 
-// Listen for Desktop Clicks
 window.addEventListener('click', (e) => {
     handleNodeInteraction(e.clientX, e.clientY, e.target);
 });
 
-// Listen for Mobile Screen Taps (Bypasses the "Wiggle" bug)
 window.addEventListener('touchend', (e) => {
     if (e.changedTouches.length > 0) {
         handleNodeInteraction(e.changedTouches[0].clientX, e.changedTouches[0].clientY, e.target);
     }
 });
 
-// The "Satellite View" Flight Offset
 function executeFlight(targetMesh) {
     controls.enabled = false; 
     isFlying = true; 
     activeHologramTarget = null; hologramUI.classList.remove('active'); document.getElementById('page-terminal').classList.remove('active'); 
 
     const targetPos = targetMesh.position;
-    
-    // We pushed the camera offset all the way to (90, 60, 90) for that massive, sweeping satellite scale!
     const camOffset = new THREE.Vector3(90, 60, 90);
     const finalCamPos = targetPos.clone().add(camOffset);
 
@@ -365,7 +359,6 @@ function executeFlight(targetMesh) {
     });
 }
 
-// Returning to Orbit
 document.getElementById('return-btn').addEventListener('click', () => {
     if (isFlying) return; 
     controls.enabled = false; 
@@ -415,7 +408,6 @@ function updateHologramPosition() {
 // --- 6. GLOBAL RENDER LOOP ---
 function animate() {
     requestAnimationFrame(animate);
-    
     if (!isRotating && !isFlying && controls.enabled) controls.update(); 
     
     updatePageTextPosition(); 
