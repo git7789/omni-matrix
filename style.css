@@ -108,11 +108,20 @@ canvas { display: block; width: 100vw; height: 100vh; }
     text-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
 }
 #holo-stack { color: #aaccff; font-size: 0.9rem; letter-spacing: 2px; margin: 0 0 15px 0; font-weight: bold; }
+
+/* "KILLED" ACCESS DATA BUTTON */
 #holo-link {
-    display: inline-block; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; color: #00e5ff;
-    padding: 8px 16px; text-decoration: none; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.3s;
+    display: inline-block; 
+    background: rgba(85, 105, 135, 0.05); /* Dimmed background */
+    border: 1px solid #5a759a; /* Muted grey-blue border */
+    color: #5a759a; /* Muted text color */
+    padding: 8px 16px; 
+    text-decoration: line-through; /* Visual indicator that the link is dead */
+    font-size: 0.8rem; 
+    letter-spacing: 1px; 
+    pointer-events: none; /* KILLS THE CLICK COMPLETELY */
+    cursor: not-allowed;
 }
-#holo-link:hover { background: #00e5ff; color: #020611; }
 
 /* ==========================================
    📱 MOBILE ARMOR PROTOCOL (RESPONSIVE UI)
