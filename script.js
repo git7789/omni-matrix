@@ -4,9 +4,45 @@ window.onload = () => {
     
     // 💥 The exact moment of impact (800ms)
     setTimeout(() => {
-        document.getElementById('shockwave').style.animation = 'blastWave 0.8s ease-out forwards';
+        // 1. Trigger Screen Shake
+        document.body.classList.add('shake-screen');
+        
+        // 2. Hide the zero instantly
+        document.getElementById('falling-zero').style.opacity = '0';
+        
+        // 3. Spawn Mushroom Cloud Dots using GSAP
+        const particleContainer = document.getElementById('mushroom-particles');
+        for(let i = 0; i < 80; i++) {
+            let dot = document.createElement('div');
+            dot.className = 'cloud-dot';
+            particleContainer.appendChild(dot);
+            
+            // Physics math to separate the "Cap" from the "Stem"
+            let isCap = Math.random() > 0.3; // 70% cap, 30% stem
+            let angle = Math.random() * Math.PI * 2;
+            let distance = isCap ? (50 + Math.random() * 150) : (10 + Math.random() * 30);
+            let height = isCap ? (-80 - Math.random() * 120) : (-20 - Math.random() * 80);
+            
+            let xPos = isCap ? Math.cos(angle) * distance : (Math.random() - 0.5) * 40;
+            let yPos = height;
+            
+            // GSAP Blast Animation
+            gsap.fromTo(dot, 
+                { x: 0, y: 0, opacity: 1, scale: 0 },
+                { 
+                    x: xPos, y: yPos, 
+                    opacity: 0, scale: 1 + Math.random() * 2.5, 
+                    duration: 1.0 + Math.random() * 1.5, 
+                    ease: "power3.out",
+                    onComplete: () => dot.remove() 
+                }
+            );
+        }
+
+        // 4. Trigger Horizontal Shockwave Line
         document.getElementById('explosion-line').style.animation = 'expandLine 1.0s ease-out forwards';
         
+        // 5. Fade to the 3D City
         setTimeout(() => {
             document.getElementById('boot-screen').style.opacity = '0';
             setTimeout(() => document.getElementById('boot-screen').style.display = 'none', 600);
@@ -16,7 +52,8 @@ window.onload = () => {
             document.getElementById('page-terminal').classList.add('active');
             
             controls.enabled = true; 
-        }, 600); // UI fades in right after the blast wave clears
+            document.body.classList.remove('shake-screen'); // Reset shake
+        }, 1200); 
     }, 800); 
 };
 
@@ -203,6 +240,7 @@ let isRotating = false;
 let isFlying = false; 
 let currentPageIndex = 0;
 
+// 🚀 THE STARK MANIFESTO ADDED
 const pages = [
     { title: "ABOUT", text: "I am Bowen. I specialize in high-stakes architecture and scaling systems that actually move the needle. Let's see if your vision can handle the upgrade." },
     { title: "SKILLS", text: "Full-Stack Development // WebGL // E-Commerce // Mobile Apps" },
@@ -289,7 +327,7 @@ document.querySelectorAll('.menu-item').forEach((item) => {
     });
 });
 
-// --- 5. RAYCASTER FLIGHT LOGIC ---
+// --- 5. RAYCASTER FLIGHT LOGIC (DEEP DIVING INTO CHIPS) ---
 let activeHologramTarget = null;
 const hologramUI = document.getElementById('hologram-ui');
 
@@ -303,6 +341,7 @@ window.addEventListener('pointermove', (e) => {
     else { document.body.style.cursor = 'default'; }
 });
 
+// 🚀 FIX: The Unified Interaction Handler (Handles both Desktop Clicks and Mobile Taps)
 function handleNodeInteraction(clientX, clientY, targetElement) {
     if(isRotating || isFlying || !controls.enabled || (targetElement && targetElement.closest && targetElement.closest('#sidebar-menu')) || targetElement.tagName === 'BUTTON' || targetElement.tagName === 'A') return;
     
@@ -316,22 +355,27 @@ function handleNodeInteraction(clientX, clientY, targetElement) {
     }
 }
 
+// Listen for Desktop Clicks
 window.addEventListener('click', (e) => {
     handleNodeInteraction(e.clientX, e.clientY, e.target);
 });
 
+// Listen for Mobile Screen Taps (Bypasses the "Wiggle" bug)
 window.addEventListener('touchend', (e) => {
     if (e.changedTouches.length > 0) {
         handleNodeInteraction(e.changedTouches[0].clientX, e.changedTouches[0].clientY, e.target);
     }
 });
 
+// The "Satellite View" Flight Offset
 function executeFlight(targetMesh) {
     controls.enabled = false; 
     isFlying = true; 
     activeHologramTarget = null; hologramUI.classList.remove('active'); document.getElementById('page-terminal').classList.remove('active'); 
 
     const targetPos = targetMesh.position;
+    
+    // We pushed the camera offset all the way to (90, 60, 90) for that massive, sweeping satellite scale!
     const camOffset = new THREE.Vector3(90, 60, 90);
     const finalCamPos = targetPos.clone().add(camOffset);
 
@@ -359,6 +403,7 @@ function executeFlight(targetMesh) {
     });
 }
 
+// Returning to Orbit
 document.getElementById('return-btn').addEventListener('click', () => {
     if (isFlying) return; 
     controls.enabled = false; 
@@ -408,6 +453,7 @@ function updateHologramPosition() {
 // --- 6. GLOBAL RENDER LOOP ---
 function animate() {
     requestAnimationFrame(animate);
+    
     if (!isRotating && !isFlying && controls.enabled) controls.update(); 
     
     updatePageTextPosition(); 
