@@ -12,25 +12,56 @@ canvas { display: block; width: 100vw; height: 100vh; }
     background-color: #020611; z-index: 100;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     transition: opacity 0.6s ease-in-out;
+    overflow: hidden; 
 }
+
+/* ☄️ The Cyan Data-Meteor */
 #falling-zero {
-    position: absolute; color: #00e5ff; font-size: 2.5rem; font-weight: bold;
-    text-shadow: 0 0 15px #00e5ff, 0 0 30px #0055ff; top: -50px; opacity: 0; 
+    position: absolute; 
+    top: 50%; left: 50%; 
+    color: #ffffff; 
+    font-size: 3rem; font-weight: bold;
+    text-shadow: 
+        4px -4px 10px #00ffff, 
+        12px -12px 20px #00aaff, 
+        24px -24px 40px #0055ff, 
+        40px -40px 60px #0022aa;
+    opacity: 0; 
+    transform: translate(50vw, -50vh) scale(1); 
 }
-.drop-anim { animation: dropZero 0.8s cubic-bezier(0.5, 0, 1, 1) forwards; }
+
+.drop-anim { animation: meteorStrike 0.8s cubic-bezier(0.4, 0, 1, 1) forwards; }
+
+/* 💥 The EMP Shockwave */
+#shockwave {
+    position: absolute; top: 50%; left: 50%;
+    width: 10px; height: 10px; background: transparent;
+    border: 4px solid #00e5ff; border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0); opacity: 0;
+    box-shadow: 0 0 40px #00e5ff, inset 0 0 40px #0055ff;
+}
+
 #explosion-line {
-    position: absolute; height: 2px; background-color: #00e5ff;
-    box-shadow: 0 0 15px #00e5ff, 0 0 30px #0055ff; width: 0%; opacity: 0;
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    height: 2px; width: 0%; opacity: 0;
+    background-color: #ffffff; box-shadow: 0 0 20px #00e5ff, 0 0 40px #0055ff;
 }
-@keyframes dropZero {
-    0% { top: -50px; opacity: 1; }
-    99% { top: 50%; transform: translateY(-50%); opacity: 1; }
-    100% { top: 50%; transform: translateY(-50%); opacity: 0; }
+
+@keyframes meteorStrike {
+    0% { transform: translate(50vw, -50vh) scale(1); opacity: 1; }
+    95% { transform: translate(0, 0) scale(1.5); opacity: 1; } 
+    100% { transform: translate(0, 0) scale(0); opacity: 0; } 
 }
+
+@keyframes blastWave {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; border-width: 30px; }
+    100% { transform: translate(-50%, -50%) scale(40); opacity: 0; border-width: 0px; }
+}
+
 @keyframes expandLine {
     0% { width: 0%; opacity: 1; }
-    60% { width: 100%; opacity: 1; }
-    100% { width: 100%; opacity: 0; }
+    50% { width: 100vw; opacity: 1; }
+    100% { width: 100vw; opacity: 0; }
 }
 
 /* TOP LEFT HUD & BRANDING */
@@ -112,11 +143,11 @@ canvas { display: block; width: 100vw; height: 100vh; }
 /* "KILLED" ACCESS DATA BUTTON */
 #holo-link {
     display: inline-block; 
-    background: rgba(85, 105, 135, 0.05); /* Dimmed background */
-    border: 1px solid #5a759a; /* Muted grey-blue border */
-    color: #5a759a; /* Muted text color */
+    background: rgba(85, 105, 135, 0.05); 
+    border: 1px solid #5a759a; 
+    color: #5a759a; 
     padding: 8px 16px; 
-    text-decoration: line-through; /* Visual indicator that the link is dead */
+    text-decoration: line-through; 
     font-size: 0.8rem; 
     letter-spacing: 1px; 
     pointer-events: none; /* KILLS THE CLICK COMPLETELY */
@@ -134,43 +165,30 @@ canvas { display: block; width: 100vw; height: 100vh; }
 
     /* 2. Transform Sidebar into a Bottom Swipe Menu */
     #sidebar-menu {
-        top: auto;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        flex-direction: row;
-        width: 90vw;
-        overflow-x: auto;
-        gap: 20px;
-        /* Hide ugly scrollbars for a clean cyber-look */
-        -ms-overflow-style: none;  
-        scrollbar-width: none; 
+        top: auto; bottom: 20px; left: 50%; transform: translateX(-50%);
+        flex-direction: row; width: 90vw; overflow-x: auto; gap: 20px;
+        -ms-overflow-style: none; scrollbar-width: none; 
     }
     #sidebar-menu::-webkit-scrollbar { display: none; }
     
     .menu-item { 
-        font-size: 0.7rem; 
-        padding-left: 0; 
-        padding-bottom: 8px; 
-        white-space: nowrap; 
+        color: #888888; /* Muted Grey */
+        font-size: 0.7rem; padding-left: 0; padding-bottom: 8px; white-space: nowrap; 
     }
     .menu-item::before { 
-        top: auto; 
-        bottom: 0; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        width: 0px; 
-        height: 2px; 
+        top: auto; bottom: 0; left: 50%; transform: translateX(-50%); 
+        width: 0px; height: 2px; background-color: #888888; 
     }
-    .menu-item.active::before { width: 100%; }
+    .menu-item.active {
+        color: #ffffff; /* Turns bright white when active */
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    .menu-item.active::before { width: 100%; background-color: #ffffff; }
 
     /* 3. Scale Down & Box-Size the Page Text */
     #page-terminal, #hologram-ui {
-        width: 90vw; 
-        padding: 20px;
-        box-sizing: border-box; /* This is the magic rule that stops the text from spilling off screen! */
+        width: 90vw; padding: 20px; box-sizing: border-box; 
     }
-    
     #page-title { font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 10px; }
     #page-text { font-size: 0.85rem; line-height: 1.4; word-wrap: break-word; }
 
@@ -181,16 +199,9 @@ canvas { display: block; width: 100vw; height: 100vh; }
 
     /* 5. Ergonomic Red Return Button (Bottom Center) */
     #return-btn {
-        position: fixed;
-        bottom: 80px; /* Floats perfectly above your swipe menu */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80vw; /* Makes it a nice, wide tap target */
-        text-align: center;
-        z-index: 100;
-        background: rgba(255, 0, 85, 0.1); /* Adds a slight tinted background */
-        backdrop-filter: blur(4px); /* Blurs the city behind it for readability */
-        font-size: 0.9rem;
-        padding: 15px;
+        position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+        width: 80vw; text-align: center; z-index: 100;
+        background: rgba(255, 0, 85, 0.1); backdrop-filter: blur(4px); 
+        font-size: 0.9rem; padding: 15px;
     }
 }
