@@ -155,20 +155,18 @@ canvas { display: block; width: 100vw; height: 100vh; }
     }
     .menu-item.active::before { width: 100%; }
 
-    /* 3. Scale Down the Orbital Page Text */
-    #page-terminal {
-        width: 85vw; /* Compresses the 600px width */
-        padding: 25px;
+    /* 3. Scale Down & Box-Size the Page Text */
+    #page-terminal, #hologram-ui {
+        width: 90vw; 
+        padding: 20px;
+        box-sizing: border-box; /* This is the magic rule that stops the text from spilling off screen! */
     }
-    #page-title { font-size: 1.8rem; letter-spacing: 4px; margin-bottom: 10px; }
-    #page-text { font-size: 0.95rem; line-height: 1.5; }
+    
+    #page-title { font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 10px; }
+    #page-text { font-size: 0.85rem; line-height: 1.4; word-wrap: break-word; }
 
     /* 4. Scale Down the Holographic Project Terminal */
-    #hologram-ui {
-        width: 85vw;
-        padding: 25px;
-    }
-    #holo-title { font-size: 1.3rem; letter-spacing: 2px; }
-    #holo-desc { font-size: 0.85rem; margin-bottom: 10px; }
-    #holo-stack { font-size: 0.75rem; }
+    #holo-title { font-size: 1.2rem; letter-spacing: 1px; }
+    #holo-desc { font-size: 0.8rem; margin-bottom: 10px; }
+    #holo-stack { font-size: 0.7rem; }
 }
