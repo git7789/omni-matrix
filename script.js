@@ -303,14 +303,33 @@ window.addEventListener('pointermove', (e) => {
     else { document.body.style.cursor = 'default'; }
 });
 
-window.addEventListener('click', (e) => {
-    if(isRotating || isFlying || !controls.enabled || e.target.closest('#sidebar-menu') || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+// 🚀 FIX: The Unified Interaction Handler (Handles both Desktop Clicks and Mobile Taps)
+function handleNodeInteraction(clientX, clientY, targetElement) {
+    if(isRotating || isFlying || !controls.enabled || (targetElement && targetElement.closest && targetElement.closest('#sidebar-menu')) || targetElement.tagName === 'BUTTON' || targetElement.tagName === 'A') return;
+    
+    mouse.x = (clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
+    
     const intersects = raycaster.intersectObjects(interactableNodes);
-    if (intersects.length > 0) { executeFlight(intersects[0].object); }
+    if (intersects.length > 0) { 
+        executeFlight(intersects[0].object); 
+    }
+}
+
+// Listen for Desktop Clicks
+window.addEventListener('click', (e) => {
+    handleNodeInteraction(e.clientX, e.clientY, e.target);
 });
 
-// 🚀 FIX: The "Satellite View" Flight Offset
+// Listen for Mobile Screen Taps (Bypasses the "Wiggle" bug)
+window.addEventListener('touchend', (e) => {
+    if (e.changedTouches.length > 0) {
+        handleNodeInteraction(e.changedTouches[0].clientX, e.changedTouches[0].clientY, e.target);
+    }
+});
+
+// The "Satellite View" Flight Offset
 function executeFlight(targetMesh) {
     controls.enabled = false; 
     isFlying = true; 
@@ -318,7 +337,7 @@ function executeFlight(targetMesh) {
 
     const targetPos = targetMesh.position;
     
-    // 🚀 We pushed the camera offset all the way to (90, 60, 90) for that massive, sweeping satellite scale!
+    // We pushed the camera offset all the way to (90, 60, 90) for that massive, sweeping satellite scale!
     const camOffset = new THREE.Vector3(90, 60, 90);
     const finalCamPos = targetPos.clone().add(camOffset);
 
